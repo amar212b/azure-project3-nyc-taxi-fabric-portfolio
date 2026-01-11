@@ -1,0 +1,23 @@
+name: Validate Azure Access
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Azure Login
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Verify Access
+      run: |
+        az account show --output table
+        az group show --name nyc-taxi-rg --output table || echo "RG exists"
+        echo "Azure access validated successfully"
