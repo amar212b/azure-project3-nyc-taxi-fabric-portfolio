@@ -1,0 +1,19 @@
+targetScope = 'subscription'
+
+param location string = 'westeurope'
+param rgName string = 'nyc-taxi-rg'
+param workspaceName string = 'nyc-taxi-fabric-ws'
+
+resource rg 'Microsoft.Resources/resourceGroups@2023-07-01' = {
+  name: rgName
+  location: location
+}
+
+resource fabricWs 'Microsoft.Synapse/workspaces@2021-06-01' = {
+  name: workspaceName
+  location: location
+  identity: { type: 'SystemAssigned' }
+  properties: {}
+}
+
+output workspaceName string = fabricWs.name
