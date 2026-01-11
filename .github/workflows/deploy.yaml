@@ -1,4 +1,4 @@
-name: Deploy Fabric Workspace (Bicep)
+name: Deploy Fabric Workspace
 
 on:
   push:
@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+      with:
+        path: 'repo'  # ← This fixes double nesting! Clones into /home/runner/work/repo/
 
     - name: Azure Login
       uses: azure/login@v2
@@ -21,5 +23,5 @@ jobs:
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         resourceGroupName: nyc-taxi-rg
-        template: ${{ github.workspace }}/infra/main.bicep
+        template: repo/infra/main.bicep  # ← Update path to include 'repo/'
         parameters: location=westeurope
