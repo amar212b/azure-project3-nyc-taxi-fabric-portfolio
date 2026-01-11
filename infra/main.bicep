@@ -1,22 +1,13 @@
-targetScope = 'subscription'
+targetScope = 'resourceGroup'  // ← Change to this
 
 param location string = 'westeurope'
-param rgName string = 'nyc-taxi-rg'
 param workspaceName string = 'nyc-taxi-fabric-ws'
 
-resource rg 'Microsoft.Resources/resourceGroups@2023-07-01' = {
-  name: rgName
+resource fabricWs 'Microsoft.Synapse/workspaces@2021-06-01' = {
+  name: workspaceName
   location: location
+  identity: { type: 'SystemAssigned' }
+  properties: {}
 }
 
-// Nested deployment for the workspace (scope = resourceGroup)
-module workspace 'workspace.bicep' = {
-  name: 'deployFabricWorkspace'
-  scope: rg
-  params: {
-    location: location
-    workspaceName: workspaceName
-  }
-}
-
-output workspaceName string = workspace.outputs.workspaceName
+output workspaceName string = fabricWs.name
