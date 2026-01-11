@@ -1,4 +1,4 @@
-targetScope = 'subscription'  // Must be subscription scope to create RG
+targetScope = 'subscription'
 
 param location string = 'westeurope'
 param rgName string = 'nyc-taxi-rg'
@@ -9,12 +9,14 @@ resource rg 'Microsoft.Resources/resourceGroups@2023-07-01' = {
   location: location
 }
 
-resource fabricWs 'Microsoft.Synapse/workspaces@2021-06-01' = {
-  name: workspaceName
-  location: location
-  resourceGroup: rg.name  // Links to the new RG
-  identity: { type: 'SystemAssigned' }
-  properties: {}
+// Nested deployment for workspace (at resource group scope)
+module workspace 'workspace.bicep' = {
+  name: 'deployWorkspace'
+  scope: rg
+  params: {
+    location: location
+    workspaceName: workspaceName
+  }
 }
 
-output workspaceName string = fabricWs.name
+output workspaceName string = workspace.outputs.workspaceName
