@@ -2,7 +2,7 @@ targetScope = 'subscription'
 
 param location string = 'westeurope'
 param rgName string = 'nyc-taxi-rg'
-param workspaceName string = 'nyc-taxi-fabric-ws'
+param workspaceName string = 'nyc-taxi-fabric-ws-${uniqueString(rg().id)}'
 
 resource rg 'Microsoft.Resources/resourceGroups@2023-07-01' = {
   name: rgName
@@ -12,6 +12,7 @@ resource rg 'Microsoft.Resources/resourceGroups@2023-07-01' = {
 resource fabricWs 'Microsoft.Synapse/workspaces@2021-06-01' = {
   name: workspaceName
   location: location
+  resourceGroup: rg.name  // Link to the RG
   identity: { type: 'SystemAssigned' }
   properties: {}
 }
