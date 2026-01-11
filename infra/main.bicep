@@ -9,9 +9,9 @@ resource rg 'Microsoft.Resources/resourceGroups@2023-07-01' = {
   location: location
 }
 
-// Nested deployment for workspace (at resource group scope)
+// Nested deployment for the workspace (scope = resourceGroup)
 module workspace 'workspace.bicep' = {
-  name: 'deployWorkspace'
+  name: 'deployFabricWorkspace'
   scope: rg
   params: {
     location: location
