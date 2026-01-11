@@ -5,7 +5,7 @@
 **Domain:** Transportation  
 **Business Problem:** Analyze NYC Yellow Taxi trip data for insights on revenue trends, trip distance, and payment patterns to optimize operations.
 
-**Dataset:** Kaggle NYC Yellow Taxi (multiple months CSV, ~1M+ rows)  
+**Dataset:** Kaggle NYC Yellow Taxi (multiple months CSV)  
 Note: Dataset contained historical spillover; cleaning applied, analysis includes all data for richer patterns.
 
 **Architecture:** Medallion pattern in Fabric Lakehouse  
@@ -20,9 +20,7 @@ Note: Dataset contained historical spillover; cleaning applied, analysis include
 4. 04_quality_checks.ipynb – Assertions-only validation  
 
 **Git Integration Note**  
-Fabric native sync (GitHub/Azure DevOps) is disabled in trial/developer subscription due to billing restrictions. Notebooks exported manually as .ipynb for version control. In production (paid subscription), native two-way sync is used.
-
-**CI/CD:** GitHub Actions validates Azure access & subscription permissions.
+Fabric native sync (GitHub/Azure DevOps) is disabled in trial/developer subscription due to billing restrictions. Notebooks exported manually as .ipynb for version control.
 
 **Screenshots:**
 ![Bronze Upload](images/bronze_upload.png)
