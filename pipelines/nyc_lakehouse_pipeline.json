@@ -1,0 +1,95 @@
+{
+    "name": "nyc_lakehouse_pipeline",
+    "objectId": "a805cfb4-3079-4cd7-9969-ad346ffa8578",
+    "properties": {
+        "activities": [
+            {
+                "name": "Bronze_Ingestion",
+                "type": "TridentNotebook",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "typeProperties": {
+                    "notebookId": "84faf22c-af65-4310-a011-5773e20b779d",
+                    "workspaceId": "2002e555-5023-4025-9909-bf3aacc355dc"
+                }
+            },
+            {
+                "name": "Silver_Transform",
+                "type": "TridentNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "Bronze_Ingestion",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "typeProperties": {
+                    "notebookId": "afa03eb4-c66e-4213-be9d-e6aa46674c36",
+                    "workspaceId": "2002e555-5023-4025-9909-bf3aacc355dc"
+                }
+            },
+            {
+                "name": "Gold_Aggregations",
+                "type": "TridentNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "Silver_Transform",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "typeProperties": {
+                    "notebookId": "f0a3cb3d-f39c-40fd-889d-3e0193985213",
+                    "workspaceId": "2002e555-5023-4025-9909-bf3aacc355dc"
+                }
+            },
+            {
+                "name": "quality_checks",
+                "type": "TridentNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "Gold_Aggregations",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "typeProperties": {
+                    "notebookId": "0b77fb5c-b5e2-46d5-a43c-4e9f663c41d0",
+                    "workspaceId": "2002e555-5023-4025-9909-bf3aacc355dc"
+                }
+            }
+        ],
+        "lastModifiedByObjectId": "e8997f5a-b430-4fd7-9cf2-47921815063b",
+        "lastPublishTime": "2026-01-11T20:41:43Z"
+    }
+}
