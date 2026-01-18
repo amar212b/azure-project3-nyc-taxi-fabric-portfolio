@@ -23,7 +23,5 @@ Note: Dataset contained historical spillover; cleaning applied, analysis include
 Fabric native sync (GitHub/Azure DevOps) is disabled in trial/developer subscription due to billing restrictions. Notebooks exported manually as .ipynb for version control.
 
 **Screenshots:**
-![Bronze Upload](images/bronze_upload.png)
-![Silver Preview](images/silver_preview.png)
-![Gold Daily Revenue](images/gold_daily_preview.png)
-![Quality Checks](images/quality_checks_passed.png)
+https://github.com/amar212b/azure-project3-nyc-taxi-fabric-portfolio/tree/35f55e6979c526955a2503804daae8428920a0a3/images
+
